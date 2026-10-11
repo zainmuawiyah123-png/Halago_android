@@ -31,17 +31,18 @@ jobs:
         pip install --upgrade pip
         pip install --upgrade Cython==0.29.36 buildozer
 
-    - name: Generate buildozer.spec automatically
+    - name: Generate and configure buildozer.spec
       run: |
         buildozer init
-        # تعديل اسم التطبيق والملف الرئيسي تلقائياً في الإعدادات
         sed -i 's/# title = My Application/title = My Android App/g' buildozer.spec
         sed -i 's/# source.file =/source.file = app_customer_updated.py/g' buildozer.spec
-        sed -i 's/requirements = python3,kivy/requirements = python3,kivy/g' buildozer.spec
+        sed -i 's/# android.api = 33/android.api = 31/g' buildozer.spec
+        sed -i 's/# android.minapi = 21/android.minapi = 21/g' buildozer.spec
+        sed -i 's/# android.sdk = 20/android.sdk = 31/g' buildozer.spec
 
     - name: Build with Buildozer
       run: |
-        buildozer -v android debug
+        yes | buildozer -v android debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
