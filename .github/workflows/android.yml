@@ -31,6 +31,14 @@ jobs:
         pip install --upgrade pip
         pip install --upgrade Cython==0.29.36 buildozer
 
+    - name: Generate buildozer.spec automatically
+      run: |
+        buildozer init
+        # تعديل اسم التطبيق والملف الرئيسي تلقائياً في الإعدادات
+        sed -i 's/# title = My Application/title = My Android App/g' buildozer.spec
+        sed -i 's/# source.file =/source.file = app_customer_updated.py/g' buildozer.spec
+        sed -i 's/requirements = python3,kivy/requirements = python3,kivy/g' buildozer.spec
+
     - name: Build with Buildozer
       run: |
         buildozer -v android debug
