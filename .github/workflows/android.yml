@@ -1,7 +1,7 @@
 ```yaml
 name: Build HALAGO Android APK
 
-on:
+'on':
   push:
     branches: ["main"]
   workflow_dispatch:
